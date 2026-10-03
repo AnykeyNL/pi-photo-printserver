@@ -45,7 +45,7 @@ Browser ──► FastAPI (:8080) ──► Pillow (resize / crop / rotate)
 ### 1. Get the code onto the Pi
 
 ```bash
-git clone https://github.com/anykynl/pi-photo-printserver.git ~/print-server
+git clone https://github.com/AnykeyNL/pi-photo-printserver.git ~/print-server
 cd ~/print-server
 ```
 
