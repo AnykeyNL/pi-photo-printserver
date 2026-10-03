@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>UP-DR200 Print Server</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="history-panel" aria-label="Print history">
+        <div class="history-panel-head">
+          <h2>Print history</h2>
+          <button type="button" id="clear-history" class="link-btn history-clear-all">Clear all</button>
+        </div>
+        <p class="history-hint">Uploaded photos and last print settings.</p>
+        <ul id="history-list" class="history-list"></ul>
+        <p id="history-empty" class="history-empty">No prints yet.</p>
+      </aside>
+
+      <main class="main-panel">
+        <header>
+          <h1>Photo print</h1>
+          <p class="subtitle">Choose orientation and crop, then print at the selected media size.</p>
+        </header>
+
+        <section id="dropzone" class="dropzone" tabindex="0">
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" hidden />
+          <p>Drop an image here or <button type="button" id="pick-btn" class="link">choose a file</button></p>
+        </section>
+
+        <section id="preview-section" class="hidden">
+          <div class="controls">
+            <label>
+              Media size
+              <select id="media">
+                {% for m in media_sizes %}
+                <option value="{{ m }}" {% if m == default_media %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+              </select>
+            </label>
+            <label>
+              Orientation
+              <select id="orientation">
+                <option value="portrait" selected>Portrait</option>
+                <option value="landscape">Landscape</option>
+              </select>
+            </label>
+            <label>
+              Fit
+              <select id="fit">
+                <option value="cover" selected>Auto cover</option>
+                <option value="contain">Auto letterbox</option>
+                <option value="manual">Manual crop</option>
+              </select>
+            </label>
+            <label>
+              Copies
+              <input type="number" id="copies" min="1" max="99" value="1" />
+            </label>
+          </div>
+
+          <div id="crop-editor" class="crop-editor hidden">
+            <p class="hint">Drag the photo to position it. Use zoom to adjust framing.</p>
+            <div id="crop-frame" class="crop-frame">
+              <img id="source-img" alt="Crop source" draggable="false" />
+            </div>
+            <label class="zoom-label">
+              Zoom
+              <input type="range" id="crop-zoom" min="1" max="4" step="0.01" value="1" />
+            </label>
+          </div>
+
+          <div id="preview-wrap">
+            <p class="preview-label">Print preview</p>
+            <div id="preview-frame" class="preview-frame">
+              <img id="preview" alt="Print preview" />
+            </div>
+          </div>
+          <p id="meta" class="meta"></p>
+
+          <button type="button" id="print-btn" class="primary">Print</button>
+        </section>
+
+        <p id="message" class="message" role="status"></p>
+      </main>
+
+      <aside class="queue-panel" aria-label="Print queue">
+        <section class="printer-status-panel" aria-live="polite">
+          <div class="printer-status-header">
+            <h2>Printer status</h2>
+            <button type="button" id="refresh-status" class="link-btn">Refresh</button>
+          </div>
+          <div id="printer-status" class="printer-status-card">Loading…</div>
+          <div class="printer-log-toolbar">
+            <button type="button" id="toggle-logs" class="link-btn" aria-expanded="false">
+              Show logs
+            </button>
+            <button type="button" id="copy-last-job-log" class="link-btn">Copy last job log</button>
+            <button type="button" id="clear-logs" class="link-btn hidden">Clear logs</button>
+          </div>
+          <div id="print-logs" class="print-logs hidden" aria-label="Print event log"></div>
+        </section>
+
+        <h2 class="queue-heading">Print queue</h2>
+        <p class="queue-hint">Jobs run in the background — switching photos will not cancel them.</p>
+        <ul id="queue-list" class="queue-list"></ul>
+        <p id="queue-empty" class="queue-empty">No print jobs yet.</p>
+      </aside>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
