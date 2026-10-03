@@ -2,6 +2,8 @@
 
 A small, self-hosted **photo print server for the Raspberry Pi**.
 
+Licensed under the [MIT License](LICENSE).
+
 Plug a photo printer into the Pi over USB, open a web page from any phone, tablet or laptop on your network, drop in a photo, pick the paper size and orientation, crop it if you like, and press **Print**. No drivers or apps to install on the client, and no cloud.
 
 It is built around **CUPS + Gutenprint**, which means it works with many **older dye-sublimation photo printers** that no longer have working drivers on modern Windows or macOS. The reference setup is a **Sony UP-DR200**, but any printer Gutenprint supports can be used by pointing the queue at it.
